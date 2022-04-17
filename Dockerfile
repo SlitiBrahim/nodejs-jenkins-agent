@@ -1,37 +1,18 @@
-FROM ubuntu:trusty
+FROM openshift/jenkins-slave-base-centos7
 
-# Make sure the package repository is up to date.
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN yum makecache && \
+    yum install -y epel-release && \
+    yum install -y python2-pip python-virtualenv gcc && \
+    yum clean all -y
 
-# Replace shell with bash so we can source files
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN virtualenv $HOME/venv && \
+    . $HOME/venv/bin/activate && \
+    pip install -U pip
 
-# Set debconf to run non-interactively
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+ENV ENV $HOME/venv/bin/activate
+ENV BASH_ENV $HOME/venv/bin/activate
 
-# Install base dependencies
-RUN apt-get update && apt-get install -y -q --no-install-recommends \
-	openjdk-7-jdk \
-        apt-transport-https \
-        openssh-server \
-        build-essential \
-        ca-certificates \
-        curl \
-        git \
-        libssl-dev \
-        python \
-        rsync \
-        software-properties-common \
-        wget \
-	ruby-full \
-	python-pip \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN adduser --quiet jenkins
-
-USER jenkins
-
-ADD slave.jar /home/jenkins/slave.jar
-
-USER root
+RUN chown -R 1001:0 $HOME && \
+    chmod -R g+rw $HOME
+    
+USER 1001
