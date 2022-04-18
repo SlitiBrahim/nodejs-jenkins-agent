@@ -47,7 +47,7 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     xdg-utils \ 
     wget \ 
     git \ 
-    libgbm-dev
+    libgbm-dev \
  && rm -rf /var/lib/apt/lists/*
 
 # Install Nodejs version 12
