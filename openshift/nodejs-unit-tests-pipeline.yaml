@@ -1,0 +1,17 @@
+kind: "BuildConfig"
+apiVersion: "build.openshift.io/v1"
+metadata:
+  name: "nodejs-unit-tests-pipeline-git"
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: 'git@github.com:SlitiBrahim/rip-frontend-ccvs.git'
+      ref: master
+    sourceSecret:
+      name: brahim-sliti-github2
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfilePath: JenkinsfileUnitTests
+    type: JenkinsPipeline
