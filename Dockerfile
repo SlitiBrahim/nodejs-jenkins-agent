@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 MAINTAINER SLITI Brahim <brahim.sliti@feesh.ch>
 
 RUN apt-get update && apt-get dist-upgrade -y && rm -rf /var/lib/apt/lists/*
+RUN apt install --yes nodejs
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     git \
     apt-transport-https \
