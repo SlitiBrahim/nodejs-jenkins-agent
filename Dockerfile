@@ -3,10 +3,6 @@ MAINTAINER SLITI Brahim <brahim.sliti@feesh.ch>
 
 RUN apt-get update && apt-get dist-upgrade -y && rm -rf /var/lib/apt/lists/*
 
-# Install Nodejs version 12
-RUN curl --silent --location https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install --yes nodejs
-
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     git \
     apt-transport-https \
@@ -54,6 +50,10 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     git \ 
     libgbm-dev \
  && rm -rf /var/lib/apt/lists/*
+
+# Install Nodejs version 12
+RUN curl --silent --location https://deb.nodesource.com/setup_12.x | bash -
+RUN apt install --yes nodejs
 
 # Install Java
 RUN apt-get update && apt-get install -y openjdk-8-jdk && rm -rf /var/lib/apt/lists/*
