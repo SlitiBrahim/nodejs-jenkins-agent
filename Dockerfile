@@ -70,6 +70,11 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 RUN chmod 755 /usr/local/bin/jenkins-slave && chown jenkins:jenkins /usr/local/bin/jenkins-slave
 
+# Install "oc" openshift cli tool
+COPY oc.tar.gz .
+RUN tar -xzvf oc.tar.gz && cp oc /usr/local/bin/oc
+RUN chmod 755 /usr/local/bin/oc && chown jenkins:jenkins /usr/local/bin/oc
+
 RUN mkdir -p /home/jenkins/.jenkins \
     && mkdir -p /home/jenkins/agent \
     && chown -R jenkins:jenkins /home/jenkins
