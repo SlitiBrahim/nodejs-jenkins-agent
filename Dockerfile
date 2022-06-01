@@ -71,8 +71,9 @@ COPY jenkins-slave /usr/local/bin/jenkins-slave
 RUN chmod 755 /usr/local/bin/jenkins-slave && chown jenkins:jenkins /usr/local/bin/jenkins-slave
 
 # Install "oc" openshift cli tool
-COPY oc.tar.gz .
-RUN tar -xzvf oc.tar.gz && cp oc /usr/local/bin/oc
+# COPY oc.tar.gz .
+RUN curl -o oc.tar.gz -LJO https://github.com/openshift/origin/releases/download/v1.3.2/openshift-origin-client-tools-v1.3.2-ac1d579-linux-64bit.tar.gz
+RUN tar -xzvf oc.tar.gz && cp openshift-origin-client-tools-v1.3.2-ac1d579-linux-64bit/oc /usr/local/bin/oc
 RUN chmod 755 /usr/local/bin/oc && chown jenkins:jenkins /usr/local/bin/oc
 
 RUN mkdir -p /home/jenkins/.jenkins \
